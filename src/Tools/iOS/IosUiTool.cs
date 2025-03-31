@@ -1,0 +1,109 @@
+﻿using MobileDevMcpServer.Helpers;
+using ModelContextProtocol.Server;
+using System.ComponentModel;
+
+namespace MobileDevMcpServer
+{
+    [McpServerToolType]
+    public class IosUiTool
+    {
+        /// <summary>
+        /// Simulates a tap gesture on the screen of an iOS device.
+        /// This method requires the device's serial number and the screen coordinates (X, Y) as inputs.
+        /// <param name="deviceId">The unique identifier (UDID) of the target iOS device.</param>
+        /// <param name="x">The X coordinate of the screen where the tap should occur.</param>
+        /// <param name="y">The Y coordinate of the screen where the tap should occur.</param>
+        /// <returns>
+        /// A string indicating the result of the tap operation.
+        /// </returns>
+        [McpServerTool("ios_ui_tap")]
+        [Description("Simulates a tap gesture on the device screen at the specified coordinates (X, Y).")]
+        public string Tap(string deviceId, int x, int y)
+        {
+            try
+            {
+                // Log the tap operation start
+                Logger.LogInfo($"Tapping at coordinates ({x}, {y}) on device {deviceId}...");
+
+                // Perform the tap operation
+                Process.ExecuteCommand($"idb ui tap --udid {deviceId} {x} {y}");
+
+                // Log the successful completion
+                Logger.LogInfo("Tap operation completed successfully.");
+                return $"Successfully tapped at ({x}, {y})";
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException("Error executing tap operation", ex);
+                Logger.LogError($"Error executing tap operation: {ex.Message}");
+                return $"Error: {ex.Message}";
+            }
+        }
+
+        /// <summary>
+        /// Performs a swipe gesture on the screen of a connected iOS device.
+        /// </summary>
+        /// <param name="deviceId">The unique identifier (UDID) of the target iOS device.</param>
+        /// <param name="startX">The starting X coordinate of the swipe.</param>
+        /// <param name="startY">The starting Y coordinate of the swipe.</param>
+        /// <param name="endX">The ending X coordinate of the swipe.</param>
+        /// <param name="endY">The ending Y coordinate of the swipe.</param>
+        /// <param name="durationS">The duration of the swipe in seconds (default is 0.5).</param>
+        /// <returns>
+        /// A string indicating the result of the swipe operation.
+        /// </returns>
+        [McpServerTool("ios_ui_swipe")]
+        [Description("Performs a swipe gesture on the screen of a connected iOS device.")]
+        public string Swipe(string deviceId, int startX, int startY, int endX, int endY, double durationS = 0.5)
+        {
+            try
+            {
+                // Log the swipe operation start
+                Logger.LogInfo($"Swiping from ({startX}, {startY}) to ({endX}, {endY}) with duration {durationS}s on device {deviceId}...");
+
+                // Perform the swipe operation
+                Process.ExecuteCommand($"idb ui swipe --udid {deviceId} --duration {durationS} {startX},{startY} {endX},{endY}");
+
+                // Log the successful completion
+                Logger.LogInfo("Swipe operation completed successfully.");
+                return $"Successfully swiped from ({startX}, {startY}) to ({endX}, {endY})";
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException("Error executing swipe operation", ex);
+                return $"Error executing swipe operation: {ex.Message}";
+            }
+        }
+
+        /// <summary>
+        /// Inputs text into a connected iOS device as if typed from a keyboard.
+        /// </summary>
+        /// <param name="deviceId">The unique identifier (UDID) of the target iOS device.</param>
+        /// <param name="text">The text to be input into the device.</param>
+        /// <returns>
+        /// A string indicating the result of the text input operation.
+        /// </returns>
+        [McpServerTool("ios_ui_input_text")]
+        [Description("Inputs text into a connected iOS device as if typed from a keyboard.")]
+        public string InputText(string deviceId, string text)
+        {
+            try
+            {
+                // Log the text input operation start
+                Logger.LogInfo($"Inputting text on device {deviceId}...");
+
+                // Perform the text input operation
+                Process.ExecuteCommand($"idb ui text ${text} --udid {deviceId}");
+
+                // Log the successful completion
+                Logger.LogInfo("Text input completed successfully.");
+                return "Successfully input text on device.";
+            }
+            catch (Exception e)
+            {
+                Logger.LogException("Error executing text input operation", e);
+                return $"Error executing text input operation: {e.Message}";
+            }
+        }
+    }
+}
