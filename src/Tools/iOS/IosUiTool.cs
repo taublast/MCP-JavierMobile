@@ -22,6 +22,12 @@ namespace MobileDevMcpServer
         {
             try
             {
+                if (!Idb.CheckIdbInstalled())
+                {
+                    Logger.LogError("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
+                    throw new Exception("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
+                }
+
                 // Log the tap operation start
                 Logger.LogInfo($"Tapping at coordinates ({x}, {y}) on device {deviceId}...");
 
@@ -58,6 +64,12 @@ namespace MobileDevMcpServer
         {
             try
             {
+                if (!Idb.CheckIdbInstalled())
+                {
+                    Logger.LogError("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
+                    throw new Exception("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
+                }
+
                 // Log the swipe operation start
                 Logger.LogInfo($"Swiping from ({startX}, {startY}) to ({endX}, {endY}) with duration {durationS}s on device {deviceId}...");
 
@@ -89,6 +101,12 @@ namespace MobileDevMcpServer
         {
             try
             {
+                if (!Idb.CheckIdbInstalled())
+                {
+                    Logger.LogError("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
+                    throw new Exception("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
+                }
+
                 // Log the text input operation start
                 Logger.LogInfo($"Inputting text on device {deviceId}...");
 
@@ -128,6 +146,12 @@ namespace MobileDevMcpServer
         {
             try
             {
+                if (!Idb.CheckIdbInstalled())
+                {
+                    Logger.LogError("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
+                    throw new Exception("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
+                }
+
                 // Log the start of the key press operation
                 Logger.LogInfo($"Initiating key press operation for key code {keyCode} on device with UDID {deviceId}...");
 
@@ -145,6 +169,5 @@ namespace MobileDevMcpServer
                 return $"An error occurred during the key press operation: {e.Message}";
             }
         }
-
     }
 }
