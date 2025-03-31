@@ -44,6 +44,7 @@ To use this server, ensure the following tools are installed on your development
 * `ios_ui_tap`: Simulates a tap action at specified screen coordinates on an iOS device.
 * `ios_ui_swipe`:  Simulates a swipe action between two points on an iOS device's screen.
 * `ios_ui_input_text`: Simulates text input into a field on an iOS device.
+* `ios_ui_press_key`: Simulates pressing a specific key on an iOS device.
 
 ### Example AI Assistant Queries
 

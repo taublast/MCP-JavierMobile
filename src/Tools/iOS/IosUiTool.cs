@@ -105,5 +105,46 @@ namespace MobileDevMcpServer
                 return $"Error executing text input operation: {e.Message}";
             }
         }
+
+        /// <summary>
+        /// Simulates a key press on a connected iOS device identified by its UDID.
+        /// </summary>
+        /// <param name="deviceId">
+        /// The unique identifier (UDID) of the iOS device on which the key press is to be performed.
+        /// </param>
+        /// <param name="keyCode">
+        /// The code of the key to be pressed. This should match the key codes recognized by the device.
+        /// </param>
+        /// <returns>
+        /// A message indicating whether the key press operation was successful or if an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// This method interacts with the iOS device using the `idb` tool to execute the key press operation.
+        /// Ensure that the `idb` tool is properly installed and the specified device is accessible.
+        /// </remarks>
+        [McpServerTool("ios_ui_press_key")]
+        [Description("Simulates pressing a specific key on an iOS device using its UDID and key code.")]
+        public string PressKey(string deviceId, int keyCode)
+        {
+            try
+            {
+                // Log the start of the key press operation
+                Logger.LogInfo($"Initiating key press operation for key code {keyCode} on device with UDID {deviceId}...");
+
+                // Execute the key press command
+                Process.ExecuteCommand($"idb ui key --udid {deviceId} {keyCode}");
+
+                // Log the successful completion of the operation
+                Logger.LogInfo($"Key press operation for key code {keyCode} on device {deviceId} completed successfully.");
+                return "Key press operation completed successfully.";
+            }
+            catch (Exception e)
+            {
+                // Log the exception encountered during the operation
+                Logger.LogException($"An error occurred while attempting the key press operation on device {deviceId}.", e);
+                return $"An error occurred during the key press operation: {e.Message}";
+            }
+        }
+
     }
 }
