@@ -32,6 +32,7 @@ To use this server, ensure the following tools are installed on your development
 * `android_ui_tap`: Simulates a tap action at specified screen coordinates on an Android device.
 * `android_ui_swipe`: Simulates a swipe action between two points on an Android device's screen.
 * `android_ui_input_text`: Simulates text input into a field on an Android device.
+* `android_ui_press_key`: Simulates a key press on an Android device using its serial number and keycode.
 * `android_screenshot`: Captures a screenshot from the specified Android device.
 * `android_compare_screenshot_llm`: Compares two screenshots using the provided prompt and an interaction with the Large Language Model (LLM).
 * `android_shell_command`: Runs a shell command on an Android device.

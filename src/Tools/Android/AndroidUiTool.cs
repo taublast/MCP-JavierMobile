@@ -141,5 +141,82 @@ namespace MobileDevMcpServer
                 return $"Error executing text input operation: {e.Message}";
             }
         }
+
+        /// <summary>
+        /// Simulates a key press on an Android device using its serial number and keycode.
+        /// </summary>
+        /// <param name="deviceSerial">
+        /// The unique identifier (serial number) of the target Android device.
+        /// </param>
+        /// <param name="keyCode">
+        /// The keycode representing the specific key to be pressed on the device.
+        /// Common keycodes include:
+        /// - 3: HOME
+        /// - 4: BACK
+        /// - 24: VOLUME UP
+        /// - 25: VOLUME DOWN
+        /// - 26: POWER
+        /// - 82: MENU
+        /// </param>
+        /// <returns>
+        /// A message indicating the result of the key press operation, whether successful or if an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// This method uses the device serial number to locate the Android device and sends the specified keycode to simulate
+        /// the key press operation. Ensure the keyCode matches a valid Android keycode for the expected behavior.
+        /// </remarks>
+        /// <example>
+        /// Example usage:
+        /// <code>
+        /// string result = PressKey("ABC12345", 3); // Simulates pressing the HOME key.
+        /// Console.WriteLine(result);
+        /// </code>
+        /// </example>
+        [McpServerTool("android_ui_press_key")]
+        [Description("Simulates a key press on an Android device using its serial number and keycode.")]
+        public string PressKey(string deviceSerial, int keyCode)
+        {
+            try
+            {
+                if (!Adb.CheckAdbInstalled())
+                {
+                    Logger.LogError("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
+                    throw new Exception("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
+                }
+
+                if (string.IsNullOrEmpty(deviceSerial))
+                {
+                    Logger.LogError($"Device {deviceSerial} not connected or not found.");
+                    return $"Error: Device {deviceSerial} not connected or not found.";
+                }
+
+                var keyNames = new Dictionary<int, string>
+                {
+                    { 3, "HOME" },
+                    { 4, "BACK" },
+                    { 24, "VOLUME UP" },
+                    { 25, "VOLUME DOWN" },
+                    { 26, "POWER" },
+                    { 82, "MENU" }
+                };
+
+                var keyName = keyNames.ContainsKey(keyCode) ? keyNames[keyCode] : keyCode.ToString();
+
+                // Log the press key operation start
+                Logger.LogInfo($"Pressing key {keyName} on device {deviceSerial}...");
+
+                // Perform the press key operation
+                Process.ExecuteCommand($"adb shell input keyevent {keyCode}");
+
+                // Log the successful completion
+                Logger.LogInfo("Press key operation completed successfully.");
+                return $"Successfully pressed the key {keyName}";
+            }
+            catch (Exception e)
+            {
+                Logger.LogException("Error executing press key operation", e);
+                return $"Error executing press key operation: {e.Message}";
+            }
+        }
     }
 }
