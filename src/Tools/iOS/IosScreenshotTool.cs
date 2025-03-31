@@ -39,8 +39,8 @@ namespace MobileDevMcpServer
 
                 if (string.IsNullOrEmpty(deviceId))
                 {
-                    Logger.LogError($"Device not found: {deviceId}");
-                    throw new Exception($"Error: Device {deviceId} not found.");
+                    Logger.LogError($"Device not found.");
+                    throw new Exception($"Error: Device not found.");
                 }
 
                 // Define a temporary file path to save the pulled screenshot locally

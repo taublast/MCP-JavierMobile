@@ -36,8 +36,8 @@ namespace MobileDevMcpServer
 
                 if (string.IsNullOrEmpty(deviceSerial))
                 {
-                    Logger.LogError($"Device not found: {deviceSerial}");
-                    throw new Exception($"Error: Device {deviceSerial} not found.");
+                    Logger.LogError($"Device not found.");
+                    throw new Exception($"Error: Device not found.");
                 }
 
                 // Define the temporary file path on the device

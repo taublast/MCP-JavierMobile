@@ -21,8 +21,8 @@ namespace MobileDevMcpServer
 
             if (string.IsNullOrEmpty(deviceSerial))
             {
-                Logger.LogError($"Device not found: {deviceSerial}");
-                return $"Error: Device {deviceSerial} not found.";
+                Logger.LogError($"Device not found.");
+                return $"Error: Device not found.";
             }
 
             Logger.LogInfo($"Device found: {deviceSerial}. Preparing to execute shell command: {command}");
