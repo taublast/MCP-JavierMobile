@@ -28,7 +28,7 @@ To use this server, ensure the following tools are installed on your development
 4. Configure with VS Code or other client:
 
 ```json
-"monkeyserver": {
+"mcp-server-mobiledev": {
     "type": "stdio",
     "command": "dotnet",
     "args": [
