@@ -21,6 +21,24 @@ To use this server, ensure the following tools are installed on your development
 - Facebook [IDB](https://fbidb.io/) tool [(see install guide)](https://fbidb.io/docs/installation) (Only required for UI Automation on iOS).
 - .NET SDK (e.g., .NET 9)
 
+### Setup
+1. Clone this repository
+2. Navigate to the project directory
+3. Build the project: `dotnet build`
+4. Configure with VS Code or other client:
+
+```json
+"monkeyserver": {
+    "type": "stdio",
+    "command": "dotnet",
+    "args": [
+        "run",
+        "--project",
+        "/Users/jsuarezruiz/GitHub/mobile-dev-mcp-server/src/MobileDevMcpServer.csproj"
+    ]
+}
+```
+
 ### Tools
 
 * `android_list_devices`: Retrieves details of all connected Android devices.
