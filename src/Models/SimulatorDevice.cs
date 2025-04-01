@@ -1,20 +1,27 @@
 ﻿#nullable disable
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace MobileDevMcpServer.Models
 {
+    public class SimulatorDevices
+    {
+        [JsonPropertyName("devices")]
+        public Dictionary<string, List<SimulatorDevice>> Devices { get; set; }
+    }
+
     public class SimulatorDevice
     {
-        [DataMember(Name = "udid")]
+        [JsonPropertyName("udid")]
         public string Udid { get; set; }
 
-        [DataMember(Name = "name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        [DataMember(Name = "state")]
-        public string State { get; set; }
-
-        [DataMember(Name = "runtime")]
+        [JsonPropertyName("deviceTypeIdentifier")]
         public string Runtime { get; set; }
+
+        [JsonPropertyName("state")]
+        public string State { get; set; }
     }
 }

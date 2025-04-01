@@ -2,6 +2,7 @@
 using MobileDevMcpServer.Models;
 using ModelContextProtocol.Server;
 using System.ComponentModel;
+using System.Text;
 using System.Text.Json;
 
 namespace MobileDevMcpServer
@@ -29,47 +30,43 @@ namespace MobileDevMcpServer
                 string resultJson = Process.ExecuteCommand("xcrun simctl list devices --json");
                 Logger.LogInfo("Command executed successfully. Parsing JSON response...");
 
-                var result = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, List<SimulatorDevice>>>>(resultJson);
-                var devices = new List<SimulatorDevice>();
+                // Deserialize JSON data into SimulatorDevices object
+                var result = JsonSerializer.Deserialize<SimulatorDevices>(resultJson);
 
-                if (result is not null)
+                if (result?.Devices is null || result.Devices.Count == 0)
                 {
-                    Logger.LogInfo("Parsing simulator devices from the JSON response...");
-                    foreach (var runtime in result["devices"])
+                    Logger.LogWarning("No simulator devices found.");
+                    return "No simulator devices available.";
+                }
+
+                // Prepare table header
+                var devicesTable = new StringBuilder("# Simulator Devices\n\n");
+                devicesTable.AppendLine("| Name             | Udid                | Runtime       |");
+                devicesTable.AppendLine("|------------------|---------------------|---------------|");
+
+                // Process devices and format table rows
+                foreach (var runtime in result.Devices)
+                {
+                    string runtimeName = runtime.Key.Replace("com.apple.CoreSimulator.SimRuntime.", string.Empty);
+
+                    foreach (var device in runtime.Value)
                     {
-                        foreach (var device in runtime.Value)
-                        {
-                            // Simplify runtime string and add device to the list
-                            device.Runtime = runtime.Key.Replace("com.apple.CoreSimulator.SimRuntime.", string.Empty);
-                            devices.Add(device);
-                            Logger.LogInfo($"Device added: Name={device.Name}, Udid={device.Udid}, Runtime={device.Runtime}");
-                        }
+                        device.Runtime = runtimeName;
+                        devicesTable.AppendLine($"| {device.Name,-16} | {device.Udid,-20} | {runtimeName,-13} |");
                     }
-                    Logger.LogInfo($"Successfully parsed {devices.Count} simulator device(s).");
-                }
-                else
-                {
-                    Logger.LogWarning("No devices found in the JSON response.");
-                    return "No devices found.";
-                }
-
-                // Format the result as a table
-                Logger.LogInfo("Formatting devices into a table...");
-                var devicesStr = "# Simulator Devices\n\n";
-                devicesStr += "| Name            | Udid              | Runtime         |\n";
-                devicesStr += "|-----------------|-----------------|-----------------|\n";
-
-                foreach (var device in devices)
-                {
-                    devicesStr += $"| {device.Name} | {device.Udid} | {device.Runtime} |\n";
                 }
 
                 Logger.LogInfo("Devices formatted successfully.");
-                return devicesStr;
+                return devicesTable.ToString();
+            }
+            catch (JsonException jsonEx)
+            {
+                Logger.LogException("Failed to parse simulator devices JSON.", jsonEx);
+                return $"Error parsing simulator devices: {jsonEx.Message}";
             }
             catch (Exception ex)
             {
-                Logger.LogException("An error occurred while listing simulator devices.", ex);
+                Logger.LogException("An unexpected error occurred.", ex);
                 return $"Error retrieving simulator devices: {ex.Message}";
             }
         }
