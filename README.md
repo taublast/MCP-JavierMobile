@@ -85,3 +85,7 @@ Try these queries:
 6. Commit your changes (git commit -m 'Add a new feature')
 7. Push to the branch (git push origin feature/my-feature)
 8. Open a Pull Request
+
+### License
+
+This project is available under the MIT License.
