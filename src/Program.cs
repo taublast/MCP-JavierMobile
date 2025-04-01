@@ -4,9 +4,10 @@ using ModelContextProtocol;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.AddMcpServer()  
+builder.Services
+    .AddMcpServer()  
     .WithStdioServerTransport()
-    .WithTools();
+    .WithToolsFromAssembly();
 
 builder.Logging.ClearProviders();
 
