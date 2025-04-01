@@ -5,6 +5,14 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>mcp-server-mobiledev</ToolCommandName>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Mcp.Server.MobileDev</PackageId>
+    <Title>Mobile Development MCP (Model Context Protocol) Server</Title>
+    <PackageDescription>This is a MCP designed to manage and interact with mobile devices and simulators</PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>
