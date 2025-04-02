@@ -40,7 +40,7 @@ namespace MobileDevMcpServer
                 string deviceTempFilePath = "/sdcard/screenshot.png";
 
                 // Take the screenshot on the device
-                Process.ExecuteCommand($"shell -s {deviceSerial} screencap -p {deviceTempFilePath}");
+                Process.ExecuteCommand($"adb -s {deviceSerial} shell screencap -p {deviceTempFilePath}");
 
                 // Define a temporary file path to save the pulled screenshot locally
                 string localTempFilePath = Path.GetTempFileName();
@@ -49,7 +49,7 @@ namespace MobileDevMcpServer
                 Process.ExecuteCommand($"adb pull {deviceTempFilePath} \"{localTempFilePath}\"");
 
                 // Delete the screenshot file from the device
-                Process.ExecuteCommand($"shell rm {deviceTempFilePath}");
+                Process.ExecuteCommand($"adb shell rm {deviceTempFilePath}");
 
                 // Read the screenshot image data into a byte array
                 byte[] imageData = File.ReadAllBytes(localTempFilePath);
@@ -59,7 +59,7 @@ namespace MobileDevMcpServer
 
                 return imageData;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
