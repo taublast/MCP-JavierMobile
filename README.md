@@ -82,6 +82,10 @@ Try these queries:
 * _"Provide a list of all applications installed on my phone."_
 * _"Press the Home button located at the coordinates (100, 1000)."_
 
+### Gallery
+
+<img src="https://raw.githubusercontent.com/jsuarezruiz/mobile-dev-mcp-server/refs/heads/main/images/tool-list-vscode.png" width="30%"></img> <img src="https://raw.githubusercontent.com/jsuarezruiz/mobile-dev-mcp-server/refs/heads/main/images/list-ios-simulators.png" width="30%"></img> <img src="https://raw.githubusercontent.com/jsuarezruiz/mobile-dev-mcp-server/refs/heads/main/images/list-android-apps.png" width="30%"></img> <img src="https://raw.githubusercontent.com/jsuarezruiz/mobile-dev-mcp-server/refs/heads/main/images/diagnostics-android.png" width="30%"></img> <img src="https://raw.githubusercontent.com/jsuarezruiz/mobile-dev-mcp-server/refs/heads/main/images/launch-android-app.png" width="30%"></img> <img src="https://raw.githubusercontent.com/jsuarezruiz/mobile-dev-mcp-server/refs/heads/main/images/diagnostics-android.png" width="30%"></img> 
+
 ### Contributing
 
 **I gladly welcome contributions** to help improve this project! Whether you're fixing bugs, adding new features, or enhancing documentation, your support is greatly appreciated.
