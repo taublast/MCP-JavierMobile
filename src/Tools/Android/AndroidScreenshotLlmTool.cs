@@ -33,16 +33,12 @@ namespace MobileDevMcpServer.Tools.Android
         {
             try
             {
-                Logger.LogInfo("Starting comparison of screenshots via LLM.");
-
-                // Validate inputs and log them
+                // Validate inputs
                 if (screenshot1 == null || screenshot2 == null)
                 {
-                    Logger.LogError("One or both screenshot byte arrays are null.");
                     return false;
                 }
 
-                Logger.LogInfo("Preparing chat messages for LLM interaction.");
                 ChatMessage[] messages =      
                 [
                 new(ChatRole.System, VerifyScreenshotPrompt),
@@ -66,23 +62,16 @@ namespace MobileDevMcpServer.Tools.Android
 
                 if(response is not null)
                 {
-                    Logger.LogInfo("Received response from LLM.");
                     var result = response.Text;
                     bool.TryParse(result, out bool boolResult);
 
                     return boolResult;
                 }
-                else
-                {
-                    Logger.LogWarning("LLM returned a null response.");
-                }
 
                 return false;
             }
-            catch(Exception ex)
+            catch
             {
-                Logger.LogException("Error comparing screenshots", ex);
-                Logger.LogError($"Error comparing screenshots: {ex.Message}");
                 return false;
             }
         }

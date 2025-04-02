@@ -26,16 +26,13 @@ namespace MobileDevMcpServer
         {
             try
             {
-                Logger.LogInfo("Executing command to retrieve simulator devices as JSON...");
                 string resultJson = Process.ExecuteCommand("xcrun simctl list devices --json");
-                Logger.LogInfo("Command executed successfully. Parsing JSON response...");
 
                 // Deserialize JSON data into SimulatorDevices object
                 var result = JsonSerializer.Deserialize<SimulatorDevices>(resultJson);
 
                 if (result?.Devices is null || result.Devices.Count == 0)
                 {
-                    Logger.LogWarning("No simulator devices found.");
                     return "No simulator devices available.";
                 }
 
@@ -56,17 +53,14 @@ namespace MobileDevMcpServer
                     }
                 }
 
-                Logger.LogInfo("Devices formatted successfully.");
                 return devicesTable.ToString();
             }
             catch (JsonException jsonEx)
             {
-                Logger.LogException("Failed to parse simulator devices JSON.", jsonEx);
                 return $"Error parsing simulator devices: {jsonEx.Message}";
             }
             catch (Exception ex)
             {
-                Logger.LogException("An unexpected error occurred.", ex);
                 return $"Error retrieving simulator devices: {ex.Message}";
             }
         }
@@ -84,9 +78,8 @@ namespace MobileDevMcpServer
         {
             try
             {
-                Logger.LogInfo("Executing command to retrieve simulator devices...");
                 var process = Process.StartProcess("xcrun simctl list devices");
-                Logger.LogInfo("Command executed successfully.");
+
                 var stdOut = process.StandardOutput.ReadToEnd();
                 var stdErr = process.StandardError.ReadToEnd();
 
@@ -112,14 +105,10 @@ namespace MobileDevMcpServer
                             var deviceName = line.Split(['('], StringSplitOptions.None)[0].Trim();
 
                             // Format the result as a table
-                            Logger.LogInfo("Formatting booted device into a table...");
-
                             var deviceStr = "# Booted Device\n\n";
                             deviceStr += "| Name            | Udid              |\n";
                             deviceStr += "|-----------------|-----------------|\n";
                             deviceStr += $"| {deviceName} | {deviceId} |\n";
-
-                            Logger.LogInfo("Devices formatted successfully.");
 
                             return deviceStr;
                         }
@@ -130,7 +119,6 @@ namespace MobileDevMcpServer
             }
             catch (Exception ex)
             {
-                Logger.LogException("An error occurred while retrieving the booted device.", ex);
                 return $"Error retrieving booted device: {ex.Message}";
             }
         }
@@ -151,22 +139,16 @@ namespace MobileDevMcpServer
         {
             try
             {
-                Logger.LogInfo($"Attempting to boot simulator device with ID: {deviceId}");
-
                 if (string.IsNullOrEmpty(deviceId))
                 {
-                    Logger.LogError("Device ID is missing or invalid. Cannot proceed with booting the device.");
                     throw new ArgumentNullException(nameof(deviceId), "Error: Invalid or missing device ID.");
                 }
 
                 // Execute the command to boot the simulator device
-                Logger.LogInfo($"Executing command: xcrun simctl boot {deviceId}");
                 Process.ExecuteCommand($"xcrun simctl boot {deviceId}");
-                Logger.LogInfo($"Simulator device with ID {deviceId} booted successfully.");
             }
             catch (Exception ex)
             {
-                Logger.LogException($"An error occurred while attempting to boot the simulator device with ID {deviceId}.", ex);
                 throw new Exception($"Error booting the simulator device: {ex.Message}", ex);
             }
         }
@@ -187,22 +169,16 @@ namespace MobileDevMcpServer
         {
             try
             {
-                Logger.LogInfo($"Attempting to shut down simulator device with ID: {deviceId}");
-
                 if (string.IsNullOrEmpty(deviceId))
                 {
-                    Logger.LogError("Device ID is missing or invalid. Cannot proceed with shutting down the device.");
                     throw new ArgumentNullException(nameof(deviceId), "Error: Invalid or missing device ID.");
                 }
 
                 // Execute the command to shut down the simulator device
-                Logger.LogInfo($"Executing command: xcrun simctl shutdown {deviceId}");
                 Process.ExecuteCommand($"xcrun simctl shutdown {deviceId}");
-                Logger.LogInfo($"Simulator device with ID {deviceId} shut down successfully.");
             }
             catch (Exception ex)
             {
-                Logger.LogException($"An error occurred while attempting to shut down the simulator device with ID {deviceId}.", ex);
                 throw new Exception($"Error shutting down the simulator device: {ex.Message}", ex);
             }
         }

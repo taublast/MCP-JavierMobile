@@ -21,23 +21,16 @@ namespace MobileDevMcpServer
             {
                 if (!Adb.CheckAdbInstalled())
                 {
-                    Logger.LogError("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                     throw new Exception("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                 }
-
-                Logger.LogInfo("Starting retrieval of system logs using ADB logcat command...");
 
                 // Execute the adb logcat command to capture logs from the device
                 string result = Process.ExecuteCommand("adb logcat");
 
-                Logger.LogInfo("System logs retrieved successfully.");
-              
                 return result;
             }
             catch (Exception ex)
             {
-                Logger.LogException("Error retrieving the system logs", ex);
-                Logger.LogError($"Error retrieving system logs: {ex.Message}");
                 return $"Error: {ex.Message}";
             }
         }

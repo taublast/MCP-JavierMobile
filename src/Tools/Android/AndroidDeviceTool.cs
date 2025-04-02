@@ -22,16 +22,11 @@ namespace MobileDevMcpServer
             {
                 if (!Adb.CheckAdbInstalled())
                 {
-                    Logger.LogError("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                     throw new Exception("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                 }
 
-                Logger.LogInfo("Starting device listing operation using ADB command...");
-
                 var devices = new List<AdbDevice>();
                 string result = Process.ExecuteCommand("adb devices -l");
-
-                Logger.LogInfo("ADB command executed successfully. Parsing device list...");
 
                 string[] lines = result.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
 
@@ -52,18 +47,15 @@ namespace MobileDevMcpServer
                             SerialNumber = parts[0], // Assuming the serial number is the first part
                         };
                         devices.Add(device);
-                        Logger.LogInfo($"Device added: {device.SerialNumber}, Model: {device.Model}");
                     }
                 }
 
                 if (devices is null || devices.Count == 0)
                 {
-                    Logger.LogWarning("No devices found.");
                     return "No devices found.";
                 }
 
                 // Format the result as a table
-                Logger.LogInfo($"Found {devices.Count} device(s). Formatting the device list...");
                 var devicesStr = "# Devices\n\n";
                 devicesStr += "| Serial          | Device           | Product          | Model            |\n";
                 devicesStr += "|-----------------|------------------|------------------|------------------|\n";
@@ -73,12 +65,10 @@ namespace MobileDevMcpServer
                     devicesStr += $"| `{device.SerialNumber}` | `{device.Device}` | `{device.Product}` | `{device.Model}` |\n";
                 }
 
-                Logger.LogInfo("Device list formatted successfully.");
                 return devicesStr;
             }
             catch (Exception ex)
             {
-                Logger.LogException("An error occurred while listing devices.", ex);
                 return $"Error retrieving device list: {ex.Message}";
             }
         }
@@ -93,18 +83,13 @@ namespace MobileDevMcpServer
         {
             try
             {
-                Logger.LogInfo($"Attempting to shut down the Android Virtual Device (AVD) with name: {avdName}");
-
                 if (string.IsNullOrEmpty(avdName))
                 {
-                    Logger.LogError("AVD name is missing or invalid. Cannot proceed with shutdown.");
                     throw new ArgumentNullException(nameof(avdName), "Error: Device name is missing or invalid.");
                 }
 
                 // Execute the adb command to kill the emulator
                 Process.ExecuteCommand($"adb -s {avdName} emu kill");
-
-                Logger.LogInfo($"AVD {avdName} shut down successfully.");
             }
             catch (Exception ex)
             {
@@ -124,22 +109,16 @@ namespace MobileDevMcpServer
             {
                 if (!Adb.CheckAdbInstalled())
                 {
-                    Logger.LogError("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                     throw new Exception("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                 }
 
-                Logger.LogInfo($"Attempting to shut down the Android Virtual Device (AVD) with name: {avdName}");
-
                 if (string.IsNullOrEmpty(avdName))
                 {
-                    Logger.LogError("AVD name is missing or invalid. Cannot proceed with shutdown.");
                     throw new ArgumentNullException(nameof(avdName), "Error: Device name is missing or invalid.");
                 }
 
                 // Execute the adb command to kill the emulator
                 Process.ExecuteCommand($"adb -s {avdName} emu kill");
-
-                Logger.LogInfo($"AVD {avdName} shut down successfully.");
             }
             catch (Exception ex)
             {

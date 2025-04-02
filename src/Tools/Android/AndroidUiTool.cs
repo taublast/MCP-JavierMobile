@@ -24,30 +24,21 @@ namespace MobileDevMcpServer
             {
                 if (!Adb.CheckAdbInstalled())
                 {
-                    Logger.LogError("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                     throw new Exception("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                 }
 
                 if (string.IsNullOrEmpty(deviceSerial))
                 {
-                    Logger.LogError($"Device {deviceSerial} not connected or not found.");
                     return $"Error: Device {deviceSerial} not connected or not found.";
                 }
-
-                // Log the tap operation start
-                Logger.LogInfo($"Tapping at coordinates ({x}, {y}) on device {deviceSerial}...");
 
                 // Perform the tap operation
                 Process.ExecuteCommand($"adb shell input tap {x} {y}");
 
-                // Log the successful completion
-                Logger.LogInfo("Tap operation completed successfully.");
                 return $"Successfully tapped at ({x}, {y})";
             }
             catch (Exception ex)
             {
-                Logger.LogException("Error executing tap operation", ex);
-                Logger.LogError($"Error executing tap operation: {ex.Message}");
                 return $"Error: {ex.Message}";
             }
         }
@@ -72,29 +63,21 @@ namespace MobileDevMcpServer
             {
                 if (!Adb.CheckAdbInstalled())
                 {
-                    Logger.LogError("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                     throw new Exception("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                 }
 
                 if (string.IsNullOrEmpty(deviceSerial))
                 {
-                    Logger.LogError($"Device {deviceSerial} not connected or not found.");
                     return $"Error: Device {deviceSerial} not connected or not found.";
                 }
-
-                // Log the swipe operation start
-                Logger.LogInfo($"Swiping from ({startX}, {startY}) to ({endX}, {endY}) with duration {durationMs}ms on device {deviceSerial}...");
 
                 // Perform the swipe operation
                 Process.ExecuteCommand($"shell input touchscreen swipe {startX},{startY} {endX},{endY} {durationMs}");
 
-                // Log the successful completion
-                Logger.LogInfo("Swipe operation completed successfully.");
                 return $"Successfully swiped from ({startX}, {startY}) to ({endX}, {endY})";
             }
             catch (Exception ex)
             {
-                Logger.LogException("Error executing swipe operation", ex);
                 return $"Error executing swipe operation: {ex.Message}";
             }
         }
@@ -115,30 +98,22 @@ namespace MobileDevMcpServer
             {
                 if (!Adb.CheckAdbInstalled())
                 {
-                    Logger.LogError("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                     throw new Exception("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                 }
 
                 if (string.IsNullOrEmpty(deviceSerial))
                 {
-                    Logger.LogError($"Device {deviceSerial} not connected or not found.");
                     return $"Error: Device {deviceSerial} not connected or not found.";
                 }
-
-                // Log the text input operation start
-                Logger.LogInfo($"Inputting text on device {deviceSerial}...");
 
                 // Perform the text input operation
                 Process.ExecuteCommand($"adb shell input text {text}");
 
-                // Log the successful completion
-                Logger.LogInfo("Text input completed successfully.");
                 return "Successfully input text on device.";
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Logger.LogException("Error executing text input operation", e);
-                return $"Error executing text input operation: {e.Message}";
+                return $"Error executing text input operation: {ex.Message}";
             }
         }
 
@@ -180,13 +155,11 @@ namespace MobileDevMcpServer
             {
                 if (!Adb.CheckAdbInstalled())
                 {
-                    Logger.LogError("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                     throw new Exception("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                 }
 
                 if (string.IsNullOrEmpty(deviceSerial))
                 {
-                    Logger.LogError($"Device {deviceSerial} not connected or not found.");
                     return $"Error: Device {deviceSerial} not connected or not found.";
                 }
 
@@ -202,20 +175,14 @@ namespace MobileDevMcpServer
 
                 var keyName = keyNames.ContainsKey(keyCode) ? keyNames[keyCode] : keyCode.ToString();
 
-                // Log the press key operation start
-                Logger.LogInfo($"Pressing key {keyName} on device {deviceSerial}...");
-
                 // Perform the press key operation
                 Process.ExecuteCommand($"adb shell input keyevent {keyCode}");
 
-                // Log the successful completion
-                Logger.LogInfo("Press key operation completed successfully.");
                 return $"Successfully pressed the key {keyName}";
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Logger.LogException("Error executing press key operation", e);
-                return $"Error executing press key operation: {e.Message}";
+                return $"Error executing press key operation: {ex.Message}";
             }
         }
     }

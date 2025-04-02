@@ -29,17 +29,13 @@ namespace MobileDevMcpServer
         {
             try
             {
-                Logger.LogInfo($"Initializing shell command execution for device: {deviceId}");
-                
                 if (!Idb.CheckIdbInstalled())
                 {
-                    Logger.LogError("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
                     throw new Exception("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
                 }
 
                 if (string.IsNullOrEmpty(deviceId))
                 {
-                    Logger.LogError($"Device not found.");
                     throw new Exception($"Error: Device not found.");
                 }
 
@@ -47,7 +43,6 @@ namespace MobileDevMcpServer
                 string localTempFilePath = Path.GetTempFileName();
 
                 // Take the screenshot on the device
-                Logger.LogInfo("Taking screenshot...");
                 Process.ExecuteCommand($"idb screenshot --udid {deviceId} \"{localTempFilePath}\"");
 
                 // Read the screenshot image data into a byte array
@@ -56,13 +51,10 @@ namespace MobileDevMcpServer
                 // Delete the temporary file after reading
                 File.Delete(localTempFilePath);
 
-                Logger.LogInfo("Screenshot captured and image data retrieved successfully.");
                 return imageData;
             }
-            catch(Exception ex)
+            catch
             {
-                Logger.LogException("Error taking screenshot", ex);
-
                 return null;
             }
         }

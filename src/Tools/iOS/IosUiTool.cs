@@ -24,24 +24,16 @@ namespace MobileDevMcpServer
             {
                 if (!Idb.CheckIdbInstalled())
                 {
-                    Logger.LogError("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
                     throw new Exception("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
                 }
-
-                // Log the tap operation start
-                Logger.LogInfo($"Tapping at coordinates ({x}, {y}) on device {deviceId}...");
 
                 // Perform the tap operation
                 Process.ExecuteCommand($"idb ui tap --udid {deviceId} {x} {y}");
 
-                // Log the successful completion
-                Logger.LogInfo("Tap operation completed successfully.");
                 return $"Successfully tapped at ({x}, {y})";
             }
             catch (Exception ex)
             {
-                Logger.LogException("Error executing tap operation", ex);
-                Logger.LogError($"Error executing tap operation: {ex.Message}");
                 return $"Error: {ex.Message}";
             }
         }
@@ -66,23 +58,16 @@ namespace MobileDevMcpServer
             {
                 if (!Idb.CheckIdbInstalled())
                 {
-                    Logger.LogError("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
                     throw new Exception("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
                 }
-
-                // Log the swipe operation start
-                Logger.LogInfo($"Swiping from ({startX}, {startY}) to ({endX}, {endY}) with duration {durationS}s on device {deviceId}...");
 
                 // Perform the swipe operation
                 Process.ExecuteCommand($"idb ui swipe --udid {deviceId} --duration {durationS} {startX},{startY} {endX},{endY}");
 
-                // Log the successful completion
-                Logger.LogInfo("Swipe operation completed successfully.");
                 return $"Successfully swiped from ({startX}, {startY}) to ({endX}, {endY})";
             }
             catch (Exception ex)
             {
-                Logger.LogException("Error executing swipe operation", ex);
                 return $"Error executing swipe operation: {ex.Message}";
             }
         }
@@ -103,24 +88,17 @@ namespace MobileDevMcpServer
             {
                 if (!Idb.CheckIdbInstalled())
                 {
-                    Logger.LogError("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
                     throw new Exception("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
                 }
-
-                // Log the text input operation start
-                Logger.LogInfo($"Inputting text on device {deviceId}...");
 
                 // Perform the text input operation
                 Process.ExecuteCommand($"idb ui text ${text} --udid {deviceId}");
 
-                // Log the successful completion
-                Logger.LogInfo("Text input completed successfully.");
                 return "Successfully input text on device.";
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Logger.LogException("Error executing text input operation", e);
-                return $"Error executing text input operation: {e.Message}";
+                return $"Error executing text input operation: {ex.Message}";
             }
         }
 
@@ -148,24 +126,16 @@ namespace MobileDevMcpServer
             {
                 if (!Idb.CheckIdbInstalled())
                 {
-                    Logger.LogError("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
                     throw new Exception("Idb is not installed or not in PATH. Please install Idb and ensure it is in your PATH.");
                 }
-
-                // Log the start of the key press operation
-                Logger.LogInfo($"Initiating key press operation for key code {keyCode} on device with UDID {deviceId}...");
 
                 // Execute the key press command
                 Process.ExecuteCommand($"idb ui key --udid {deviceId} {keyCode}");
 
-                // Log the successful completion of the operation
-                Logger.LogInfo($"Key press operation for key code {keyCode} on device {deviceId} completed successfully.");
                 return "Key press operation completed successfully.";
             }
             catch (Exception e)
             {
-                // Log the exception encountered during the operation
-                Logger.LogException($"An error occurred while attempting the key press operation on device {deviceId}.", e);
                 return $"An error occurred during the key press operation: {e.Message}";
             }
         }
