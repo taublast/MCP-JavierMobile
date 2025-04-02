@@ -1,16 +1,42 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ModelContextProtocol;
+using Serilog;
 
-var builder = Host.CreateApplicationBuilder(args);
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Verbose() // Capture all log levels  
+    .WriteTo.File(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "GitHubTriageMcpServer_.log"),
+        rollingInterval: RollingInterval.Day,
+        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+    .WriteTo.Debug()
+    .WriteTo.Console(standardErrorFromLevel: Serilog.Events.LogEventLevel.Verbose)
+    .CreateLogger();
 
-builder.Services
-    .AddMcpServer()  
-    .WithStdioServerTransport()
-    .WithToolsFromAssembly();
+try
+{
+    Log.Information("Starting server...");
 
-builder.Logging.ClearProviders();
+    var builder = Host.CreateApplicationBuilder(args);
 
-var app = builder.Build();
+    builder.Services
+        .AddMcpServer()
+        .WithStdioServerTransport()
+        .WithToolsFromAssembly();
 
-await app.RunAsync();
+    builder.Logging.ClearProviders();
+
+    var app = builder.Build();
+
+    await app.RunAsync();
+
+    return 0;
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+    return 1;
+}
+finally
+{
+    await Log.CloseAndFlushAsync();
+}
