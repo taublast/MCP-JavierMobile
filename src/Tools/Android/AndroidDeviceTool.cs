@@ -38,7 +38,7 @@ namespace MobileDevMcpServer
                     if (!string.IsNullOrWhiteSpace(line))
                     {
                         // Parse each line to extract device details
-                        string[] parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] parts = line.Split([' '], StringSplitOptions.RemoveEmptyEntries);
                         var device = new AdbDevice
                         {
                             Product = GetPropertyFromParts(parts, "product:"),
