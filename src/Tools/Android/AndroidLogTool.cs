@@ -12,12 +12,13 @@ namespace MobileDevMcpServer
         /// Retrieves the system logs from a connected Android device using the logcat tool.
         /// </summary>
         /// <returns>
+        /// <param name="deviceSerial">The serial number of the target Android device. This is required if multiple devices are connected.</param>
         /// <param name="maxLines">The maximum number of log lines to retrieve (default: 1000).</param>
         /// A string containing the log output captured from the device.
         /// </returns>
         [McpServerTool("android_device_logcat")]
         [Description("Retrieves the system logs from the connected Android device using logcat.")]
-        public string GetDeviceLogcat(int maxLines = 1000)
+        public string GetDeviceLogcat(string deviceSerial, int maxLines = 1000)
         {
             try
             {
@@ -26,7 +27,7 @@ namespace MobileDevMcpServer
                     throw new Exception("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
                 }
 
-                string adbCommand = "adb logcat -d";
+                string adbCommand = $"adb -s {deviceSerial} logcat -d";
 
                 // Line limit
                 if (maxLines > 0)
@@ -49,6 +50,9 @@ namespace MobileDevMcpServer
         /// Retrieves system logs from the connected Android device using the logcat tool.
         /// This method filters log entries based on the specified log level (e.g., Verbose, Debug, Info, etc.)
         /// and allows you to limit the number of lines retrieved.
+        /// <param name="deviceSerial">
+        /// The serial number of the target Android device. This is required if multiple devices are connected.
+        /// </param>
         /// </summary>
         /// <param name="logLevel">
         /// The log level to filter by (Verbose, Debug, Info, Warning, Error, Fatal).
@@ -64,9 +68,9 @@ namespace MobileDevMcpServer
         /// </returns>
         [McpServerTool("android_device_logcat_log_level")]
         [Description("Retrieves the system logs from the connected Android device using logcat by Log Level.")]
-        public string GetDeviceLogcatByLogLevel(LogCatLogLevel logLevel, int maxLines = 1000)
+        public string GetDeviceLogcatByLogLevel(string deviceSerial, LogCatLogLevel logLevel, int maxLines = 1000)
         {
-            var logs = GetDeviceLogcat(maxLines);
+            var logs = GetDeviceLogcat(deviceSerial, maxLines);
 
             // Convert log level to the corresponding letter (e.g., V, D, I, W, E, F)
             string logLevelLetter = logLevel switch
