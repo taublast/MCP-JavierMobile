@@ -16,7 +16,7 @@ namespace MobileDevMcpServer
         /// <param name="maxLines">The maximum number of log lines to retrieve (default: 1000).</param>
         /// A string containing the log output captured from the device.
         /// </returns>
-        [McpServerTool("android_device_logcat")]
+        [McpServerTool("android_logs_logcat")]
         [Description("Retrieves the system logs from the connected Android device using logcat.")]
         public string GetDeviceLogcat(string deviceSerial, int maxLines = 1000)
         {
@@ -66,7 +66,7 @@ namespace MobileDevMcpServer
         /// A string containing filtered log entries based on the specified log level.
         /// If no matching logs are found, an empty string is returned.
         /// </returns>
-        [McpServerTool("android_device_logcat_log_level")]
+        [McpServerTool("android_logs_logcat_log_level")]
         [Description("Retrieves the system logs from the connected Android device using logcat by Log Level.")]
         public string GetDeviceLogcatByLogLevel(string deviceSerial, LogCatLogLevel logLevel, int maxLines = 1000)
         {
