@@ -54,6 +54,8 @@ The MCP Inspector is an interactive developer tool designed for testing and debu
 * `android_diagnostics_bug_report`: Captures a comprehensive bug report from an Android device.
 * `android_logs_logcat`: Fetches system logs from an Android device using logcat.
 * `android_logs_logcat_log_level`: Fetches system logs from an Android device using logcat by Log Level.
+* `android_files_push`: Pushes a local file to an Android device.
+* `android_files_pull`: Pulls a file from an Android device to the local machine.
 * `android_ui_tap`: Simulates a tap action at specified screen coordinates on an Android device.
 * `android_ui_swipe`: Simulates a swipe action between two points on an Android device's screen.
 * `android_ui_input_text`: Simulates text input into a field on an Android device.
