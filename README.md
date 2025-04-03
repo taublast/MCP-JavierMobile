@@ -75,6 +75,8 @@ The MCP Inspector is an interactive developer tool designed for testing and debu
 * `ios_ui_input_text`: Simulates text input into a field on an iOS device.
 * `ios_ui_press_key`: Simulates pressing a specific key on an iOS device.
 * `ios_screenshot`: Captures a screenshot from the specified iOS device.
+* `ios_video_start`: Records a video of the iOS Simulator.
+* `ios_video_stop`: Stops the simulator video recording.
 
 ### Example AI Assistant Queries
 
