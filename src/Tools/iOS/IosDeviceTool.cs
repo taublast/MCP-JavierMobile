@@ -78,37 +78,30 @@ namespace MobileDevMcpServer
         {
             try
             {
-                var process = Process.StartProcess("xcrun simctl list devices");
+                string resultJson = Process.ExecuteCommand("xcrun simctl list devices --json");
 
-                var stdOut = process.StandardOutput.ReadToEnd();
-                var stdErr = process.StandardError.ReadToEnd();
+                // Deserialize JSON data into SimulatorDevices object
+                var result = JsonSerializer.Deserialize<SimulatorDevices>(resultJson);
 
-                process.WaitForExit();
-
-                if (!string.IsNullOrEmpty(stdOut))
+                if (result?.Devices is null || result.Devices.Count == 0)
                 {
-                    throw new Exception(stdErr);
+                    return "No simulator devices available.";
                 }
 
-                var lines = stdOut.Split(["\n"], StringSplitOptions.RemoveEmptyEntries);
-
-                foreach (var line in lines)
+                // Process devices and format table rows
+                foreach (var runtime in result.Devices)
                 {
-                    if (line.Contains("Booted", StringComparison.OrdinalIgnoreCase))
+                    string runtimeName = runtime.Key.Replace("com.apple.CoreSimulator.SimRuntime.", string.Empty);
+
+                    foreach (var device in runtime.Value)
                     {
-                        // Extract the UUID - it's inside parentheses
-                        var match = System.Text.RegularExpressions.Regex.Match(line, @"\(([-0-9A-F]+)\)");
-
-                        if (match.Success)
+                         if (device.State == "Booted")
                         {
-                            var deviceId = match.Groups[1].Value;
-                            var deviceName = line.Split(['('], StringSplitOptions.None)[0].Trim();
-
                             // Format the result as a table
                             var deviceStr = "# Booted Device\n\n";
                             deviceStr += "| Name            | Udid              |\n";
                             deviceStr += "|-----------------|-----------------|\n";
-                            deviceStr += $"| {deviceName} | {deviceId} |\n";
+                            deviceStr += $"| {device.Name} | {device.Udid} |\n";
 
                             return deviceStr;
                         }
