@@ -87,11 +87,44 @@ namespace MobileDevMcpServer
 
                 Process.ExecuteCommand($"adb pull -s {deviceSerial} {devicePath} {localPath}");
 
-                return $"File downloaded Successfully. The file `{devicePath}` has been downloaded to `{localPath}` from device {deviceSerial}.";
+                return $"File Downloaded Successfully. The file `{devicePath}` has been downloaded to `{localPath}` from device {deviceSerial}.";
             }
             catch (Exception ex)
             {
                 return $"Error pushing file: {ex.Message}";
+            }
+        }
+
+        /// <summary>
+        /// Deletes a file or directory from the connected Android device using ADB (Android Debug Bridge).
+        /// </summary>
+        /// <param name="deviceSerial">The serial number of the target device.</param>
+        /// <param name="path">The path of the file or directory to delete on the device.</param>
+        /// <returns>A string message indicating the success or failure of the deletion operation.</returns>
+        [McpServerTool(Name = "android_files_delete_file")]
+        [Description("This tool allows you to delete a specified file from a connected Android device.")]
+        public string DeleteFile(string deviceSerial, string path)
+        {
+            try 
+            {
+                if (!Adb.CheckAdbInstalled())
+                {
+                    throw new Exception("ADB is not installed or not in PATH. Please install ADB and ensure it is in your PATH.");
+                }
+
+                if (string.IsNullOrEmpty(deviceSerial))
+                {
+                    throw new Exception($"Error: Device not found.");
+                }
+
+                string result = Process.ExecuteCommand($"adb -s {deviceSerial} shell rm {path}");
+
+                return $"File Deleted Successfully: {result}";
+
+            }
+            catch (Exception ex)
+            {
+                return $"Error deleting file: {ex.Message}";
             }
         }
     }
