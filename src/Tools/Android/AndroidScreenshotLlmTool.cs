@@ -3,7 +3,7 @@ using MobileDevMcpServer.Helpers;
 using ModelContextProtocol.Server;
 using System.ComponentModel;
 
-namespace MobileDevMcpServer.Tools.Android
+namespace MobileDevMcpServer
 {
     [McpServerToolType]
     public class AndroidScreenshotLlmTool
