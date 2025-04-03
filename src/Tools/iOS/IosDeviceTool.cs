@@ -20,7 +20,7 @@ namespace MobileDevMcpServer
         /// <exception cref="Exception">
         /// Thrown when an error occurs during the device retrieval process.
         /// </exception>
-        [McpServerTool("ios_list_devices")]
+        [McpServerTool(Name = "ios_list_devices")]
         [Description("Lists all available iOS simulator devices.")]
         public string ListDevices()
         {
@@ -72,7 +72,7 @@ namespace MobileDevMcpServer
         /// The name and ID of the booted simulator device in a formatted string.
         /// If no booted simulator is found, an exception is thrown.
         /// </returns>
-        [McpServerTool("ios_booted_device")]
+        [McpServerTool(Name = "ios_booted_device")]
         [Description("Retrieves the name and ID of the first booted simulator device.")]
         public static string GetBootedDevice()
         {
@@ -133,7 +133,7 @@ namespace MobileDevMcpServer
         /// <exception cref="Exception">
         /// Thrown when an error occurs during the boot operation.
         /// </exception>
-        [McpServerTool("ios_boot_device")]
+        [McpServerTool(Name = "ios_boot_device")]
         [Description("Boots the specified iOS simulator device.")]
         public void BootDevice(string deviceId)
         {
@@ -163,7 +163,7 @@ namespace MobileDevMcpServer
         /// <exception cref="Exception">
         /// Thrown when an error occurs during the shutdown operation.
         /// </exception>
-        [McpServerTool("ios_shutdown_device")]
+        [McpServerTool(Name = "ios_shutdown_device")]
         [Description("Shuts down the specified iOS simulator device.")]
         public void ShutdownDevice(string deviceId)
         {

@@ -1,9 +1,13 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using ModelContextProtocol;
 using Serilog;
 
-Log.Logger = new LoggerConfiguration()
+internal class Program
+{
+    private static async Task<int> Main(string[] args)
+    {
+        Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Verbose() // Capture all log levels  
     .WriteTo.File(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "GitHubTriageMcpServer_.log"),
         rollingInterval: RollingInterval.Day,
@@ -12,31 +16,34 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Console(standardErrorFromLevel: Serilog.Events.LogEventLevel.Verbose)
     .CreateLogger();
 
-try
-{
-    Log.Information("Starting server...");
+        try
+        {
+            Log.Information("Starting server...");
 
-    var builder = Host.CreateApplicationBuilder(args);
+            var builder = Host.CreateApplicationBuilder(args);
 
-    builder.Services
-        .AddMcpServer()
-        .WithStdioServerTransport()
-        .WithToolsFromAssembly();
+            builder.Services
+                .AddMcpServer()
+                .WithStdioServerTransport()
+                .WithPromptsFromAssembly()
+                .WithToolsFromAssembly();
 
-    builder.Logging.ClearProviders();
+            builder.Logging.ClearProviders();
 
-    var app = builder.Build();
+            var app = builder.Build();
 
-    await app.RunAsync();
+            await app.RunAsync();
 
-    return 0;
-}
-catch (Exception ex)
-{
-    Log.Fatal(ex, "Host terminated unexpectedly");
-    return 1;
-}
-finally
-{
-    await Log.CloseAndFlushAsync();
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            Log.Fatal(ex, "Host terminated unexpectedly");
+            return 1;
+        }
+        finally
+        {
+            await Log.CloseAndFlushAsync();
+        }
+    }
 }

@@ -17,7 +17,7 @@ namespace MobileDevMcpServer
         /// <returns>
         /// A string indicating the success or failure of the bug report operation, including the output file path or relevant error message.
         /// </returns>
-        [McpServerTool("android_diagnostics_bug_report")]
+        [McpServerTool(Name = "android_diagnostics_bug_report")]
         [Description("Captures a comprehensive bug report from a connected Android device.")]
         public string CaptureBugReport(string deviceSerial, string outputPath = "", int timeoutSeconds = 500)
         {

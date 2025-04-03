@@ -23,7 +23,7 @@ namespace MobileDevMcpServer
         /// Ensure that the device with the given <paramref name="deviceId"/> is connected, 
         /// accessible, and properly configured for the operation.
         /// </remarks>
-        [McpServerTool("ios_screenshot")]
+        [McpServerTool(Name = "ios_screenshot")]
         [Description("Captures a screenshot from the specified iOS device and returns it as a byte array.")]
         public static byte[]? TakeScreenshot(string deviceId)
         {

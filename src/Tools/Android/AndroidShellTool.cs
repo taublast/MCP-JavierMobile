@@ -13,7 +13,7 @@ namespace MobileDevMcpServer
         /// <param name="deviceSerial">The serial number of the device.</param>
         /// <param name="command">The shell command to execute.</param>
         /// <returns>A formatted string containing the command output.</returns>
-        [McpServerTool("android_shell_command")]
+        [McpServerTool(Name = "android_shell_command")]
         [Description("Runs a shell command on the specified device.")]
         public string ShellCommand(string deviceSerial, string command)
         {

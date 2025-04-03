@@ -18,7 +18,7 @@ namespace MobileDevMcpServer
         /// <exception cref="Exception">
         /// Thrown when an error occurs during the installation process.
         /// </exception>
-        [McpServerTool("ios_install_app")]
+        [McpServerTool(Name = "ios_install_app")]
         [Description("Installs an application on the specified iOS simulator device.")]
         public void InstallApp(string deviceId, string appPath)
         {
@@ -54,7 +54,7 @@ namespace MobileDevMcpServer
         /// <exception cref="Exception">
         /// Thrown when an error occurs during the launch process.
         /// </exception>
-        [McpServerTool("ios_launch_app")]
+        [McpServerTool(Name = "ios_launch_app")]
         [Description("Launches an application on the specified iOS simulator device.")]
         public void LaunchApp(string deviceId, string bundleId)
         {

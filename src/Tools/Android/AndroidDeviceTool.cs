@@ -14,7 +14,7 @@ namespace MobileDevMcpServer
         /// <returns>
         /// A string containing the list of connected devices and their details, such as serial numbers.
         /// </returns>
-        [McpServerTool("android_list_devices")]
+        [McpServerTool(Name = "android_list_devices")]
         [Description("Lists all available Android devices.")]
         public string ListDevices()
         {
@@ -77,7 +77,7 @@ namespace MobileDevMcpServer
         /// Boots up an Android Virtual Device (AVD) emulator with the specified name.
         /// </summary>
         /// <param name="avdName">The name of the Android Virtual Device (AVD) to be booted.</param>
-        [McpServerTool("android_boot_device")]
+        [McpServerTool(Name = "android_boot_device")]
         [Description("Boots the specified Android device.")]
         public void BootDevice(string avdName)
         {
@@ -101,7 +101,7 @@ namespace MobileDevMcpServer
         /// Shuts down an Android Virtual Device (AVD) emulator with the specified name.
         /// </summary>
         /// <param name="avdName">The name of the Android Virtual Device (AVD) to be shut down.</param>
-        [McpServerTool("android_shutdown_device")]
+        [McpServerTool(Name = "android_shutdown_device")]
         [Description("Shuts down the specified Android device.")]
         public void ShutdownDevice(string avdName)
         {

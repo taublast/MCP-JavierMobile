@@ -12,7 +12,7 @@ namespace MobileDevMcpServer
         /// </summary>
         /// <param name="deviceSerial">The serial number of the target Android device.</param>
         /// <param name="appPath">The file path to the APK file to be installed on the device.</param>
-        [McpServerTool("android_install_app")]
+        [McpServerTool(Name = "android_install_app")]
         [Description("Installs an application on the specified Android emulator device.")]
         public void InstallApp(string deviceSerial, string appPath)
         {
@@ -47,7 +47,7 @@ namespace MobileDevMcpServer
         /// </summary>
         /// <param name="deviceSerial">The serial number of the target Android device.</param>
         /// <param name="packageName">The package name of the application to be launched.</param>
-        [McpServerTool("android_launch_app")]
+        [McpServerTool(Name = "android_launch_app")]
         [Description("Launches an application on the specified Android emulator device.")]
         public void LaunchApp(string deviceSerial, string packageName)
         {
@@ -84,7 +84,7 @@ namespace MobileDevMcpServer
         /// <returns>
         /// A string containing the list of installed application packages.
         /// </returns>
-        [McpServerTool("android_list_packages")]
+        [McpServerTool(Name = "android_list_packages")]
         [Description("Retrieves the list of installed package names from the specified Android device.")]
         public string ListPackages(string deviceSerial)
         {

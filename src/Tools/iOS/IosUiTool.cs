@@ -16,7 +16,7 @@ namespace MobileDevMcpServer
         /// <returns>
         /// A string indicating the result of the tap operation.
         /// </returns>
-        [McpServerTool("ios_ui_tap")]
+        [McpServerTool(Name = "ios_ui_tap")]
         [Description("Simulates a tap gesture on the device screen at the specified coordinates (X, Y).")]
         public string Tap(string deviceId, int x, int y)
         {
@@ -50,7 +50,7 @@ namespace MobileDevMcpServer
         /// <returns>
         /// A string indicating the result of the swipe operation.
         /// </returns>
-        [McpServerTool("ios_ui_swipe")]
+        [McpServerTool(Name = "ios_ui_swipe")]
         [Description("Performs a swipe gesture on the screen of a connected iOS device.")]
         public string Swipe(string deviceId, int startX, int startY, int endX, int endY, double durationS = 0.5)
         {
@@ -80,7 +80,7 @@ namespace MobileDevMcpServer
         /// <returns>
         /// A string indicating the result of the text input operation.
         /// </returns>
-        [McpServerTool("ios_ui_input_text")]
+        [McpServerTool(Name = "ios_ui_input_text")]
         [Description("Inputs text into a connected iOS device as if typed from a keyboard.")]
         public string InputText(string deviceId, string text)
         {
@@ -118,7 +118,7 @@ namespace MobileDevMcpServer
         /// This method interacts with the iOS device using the `idb` tool to execute the key press operation.
         /// Ensure that the `idb` tool is properly installed and the specified device is accessible.
         /// </remarks>
-        [McpServerTool("ios_ui_press_key")]
+        [McpServerTool(Name = "ios_ui_press_key")]
         [Description("Simulates pressing a specific key on an iOS device using its UDID and key code.")]
         public string PressKey(string deviceId, int keyCode)
         {

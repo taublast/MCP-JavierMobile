@@ -20,7 +20,7 @@ namespace MobileDevMcpServer
         /// <exception cref="Exception">
         /// Thrown when an error occurs during the screenshot capturing process or ADB command execution.
         /// </exception>
-        [McpServerTool("android_screenshot")]
+        [McpServerTool(Name = "android_screenshot")]
         [Description("Captures a screenshot from the specified Android device.")]
         public static byte[]? TakeScreenshot(string deviceSerial)
         {

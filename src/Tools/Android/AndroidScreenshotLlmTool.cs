@@ -27,7 +27,7 @@ namespace MobileDevMcpServer.Tools.Android
         /// <returns>
         /// A boolean value indicating whether the screenshots are deemed identical (true) or different (false) based on the LLM response.
         /// </returns>
-        [McpServerTool("android_compare_screenshot_llm")]
+        [McpServerTool(Name = "android_compare_screenshot_llm")]
         [Description("Compares two screenshots using the provided prompt and an interaction with the Large Language Model (LLM)")]
         public static async Task<bool> CompareScreenshotsLLM(IMcpServer thisServer, byte[] screenshot1, byte[] screenshot2, string prompt, int maxTokens, CancellationToken cancellationToken)
         {

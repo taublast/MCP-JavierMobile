@@ -16,7 +16,7 @@ namespace MobileDevMcpServer
         /// <returns>
         /// A string indicating the result of the tap operation.
         /// </returns>
-        [McpServerTool("android_ui_tap")]
+        [McpServerTool(Name = "android_ui_tap")]
         [Description("Simulates a tap gesture on the device screen at the specified coordinates (X, Y).")]
         public string Tap(string deviceSerial, int x, int y)
         {
@@ -55,7 +55,7 @@ namespace MobileDevMcpServer
         /// <returns>
         /// A string indicating the result of the swipe operation.
         /// </returns>
-        [McpServerTool("android_ui_swipe")]
+        [McpServerTool(Name = "android_ui_swipe")]
         [Description("Performs a swipe gesture on the screen of a connected Android device.")]
         public string Swipe(string deviceSerial, int startX, int startY, int endX, int endY, int durationMs = 500)
         {
@@ -90,7 +90,7 @@ namespace MobileDevMcpServer
         /// <returns>
         /// A string indicating the result of the text input operation.
         /// </returns>
-        [McpServerTool("android_ui_input_text")]
+        [McpServerTool(Name = "android_ui_input_text")]
         [Description("Inputs text into a connected Android device as if typed from a keyboard.")]
         public string InputText(string deviceSerial, string text)
         {
@@ -147,7 +147,7 @@ namespace MobileDevMcpServer
         /// Console.WriteLine(result);
         /// </code>
         /// </example>
-        [McpServerTool("android_ui_press_key")]
+        [McpServerTool(Name = "android_ui_press_key")]
         [Description("Simulates a key press on an Android device using its serial number and keycode.")]
         public string PressKey(string deviceSerial, int keyCode)
         {
