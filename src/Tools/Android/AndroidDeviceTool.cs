@@ -5,9 +5,35 @@ using System.ComponentModel;
 
 namespace MobileDevMcpServer
 {
+    /// <summary>
+    /// Executes ADB command with passed parameters.
+    /// </summary>
     [McpServerToolType]
     public class AndroidDeviceTool
     {
+
+        /*
+         To do a prompt like  "click on a green button with a rabbit on it".. 
+         need to do a more descriptive prompt like
+         "obtain connected device display size, then calculate from it the location of [description of the element] and click on it"
+         So maybe we could add a special Tool for such task.
+         */
+
+        [McpServerTool(Name = "android_execute_adb")]
+        [Description("Executes ADB command with passed parameters and returns the result.")]
+        public string ExecAdb(string parameters)
+        {
+            try
+            {
+                // Execute the adb command to kill the emulator
+                return Process.ExecuteCommand($"adb {parameters}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error booting the device: {ex.Message}");
+            }
+        }
+
         /// <summary>
         /// Retrieves a list of connected Android devices.
         /// </summary>
